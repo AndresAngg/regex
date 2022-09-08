@@ -1,17 +1,11 @@
-import './App.css';
 import { useState } from "react";
-import { Button } from '@material-ui/core'
 
 function App() {
   const [fileValue, setFileValue] = useState();
-  const [rs, setRs] = useState([]);
 
-  function createAccidente(fecha, placa, nV, comentario) {
-    return { fecha, placa, nV, comentario };
-  }
-  var roow = []
   const fileReader = (e) => {
     const arch = e.target.files[0]
+    if (!arch) return;
     const fileR = new FileReader();
     fileR.readAsText(arch)
     fileR.onload = () => {
@@ -22,23 +16,17 @@ function App() {
       console.log(fileR.error)
     }
   }
-  const filter = () => {
+  const filter = async () => {
     const regex = /[^a-z|A-Z](moto)[^r]/g;
     Object.keys(fileValue).map(key => {
       if (regex.test(fileValue[key])) {
-        var doc = document.getElementById('res')
-        console.log(typeof fileValue[key], fileValue[key])
-        setRs(rs)
-        // doc.innerHTML += <div> <h1></h1><br /> </div>
+        console.log(fileValue[key].replaceAll(';', '  '))
       }
-      // setRs(fileValue[key].replaceAll(';', "     "))
-
-    }
-    )
+    })
   }
 
   return (
-    <div className="App">
+    <div>
       <h2>Pruebas</h2>
       <h2>{fileValue}</h2>
       <input
@@ -48,9 +36,7 @@ function App() {
       />
       <br />
       <br />
-      <Button variant="contained" color="primary" onClick={filter}>Filtrar</Button>
-      <div id="res">{rs}</div>
-      <textarea id=""></textarea>
+      <button variant="contained" color="primary" onClick={filter}>Filtrar</button>
 
     </div>
 
