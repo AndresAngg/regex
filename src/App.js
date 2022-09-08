@@ -1,5 +1,7 @@
 import { useState } from "react";
-
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 function App() {
   const [fileValue, setFileValue] = useState();
 
@@ -17,7 +19,7 @@ function App() {
     }
   }
   const filter = async () => {
-    const regex = /[^a-z|A-Z](moto)[^r]/g;
+    const regex = /(moto)/g;
     Object.keys(fileValue).map(key => {
       if (regex.test(fileValue[key])) {
         console.log(fileValue[key].replaceAll(';', '  '))
@@ -26,19 +28,23 @@ function App() {
   }
 
   return (
-    <div>
-      <h2>Pruebas</h2>
-      <h2>{fileValue}</h2>
-      <input
-        type="file"
-        multiple={false}
-        onChange={fileReader}
-      />
-      <br />
-      <br />
-      <button variant="contained" color="primary" onClick={filter}>Filtrar</button>
-
-    </div>
+    <Container fixed>
+      <Box
+        sx={{
+          width: 300,
+          height: 300,
+        }}>
+        <h2>Taller</h2>
+        <input
+          type="file"
+          multiple={false}
+          onChange={fileReader}
+        />
+        <br />
+        <br />
+        <Button variant="outlined" onClick={filter}>Filtrar</Button>
+      </Box>
+    </Container>
 
   );
 }
